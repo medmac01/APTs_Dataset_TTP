@@ -1,0 +1,5 @@
+set,n,min,median,mean,max
+campaigns (all),35,11,20,24.4,53
+campaigns (used in paper),33,11,20,24.2,53
+"campaigns (steps, all)",35,6,14,14.5,30
+apt_chains,19,6,11,12,21

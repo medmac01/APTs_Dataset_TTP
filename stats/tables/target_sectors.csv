@@ -1,0 +1,28 @@
+sector,n_groups,percent
+Government,10,52.6
+Technology,6,31.6
+Critical Infrastructure,5,26.3
+Telecom,4,21.1
+Finance,4,21.1
+Defense,3,15.8
+Military,2,10.5
+Media,2,10.5
+Aerospace,2,10.5
+Banks,2,10.5
+Healthcare,2,10.5
+ICS/SCADA,2,10.5
+Political,1,5.3
+Cloud Infrastructure,1,5.3
+Chemical,1,5.3
+Travel,1,5.3
+Manufacturing,1,5.3
+Academic,1,5.3
+Biotech,1,5.3
+Energy,1,5.3
+Retail,1,5.3
+Hospitality,1,5.3
+Research,1,5.3
+Think Tanks,1,5.3
+Cryptocurrency,1,5.3
+Diplomatic,1,5.3
+Enterprise,1,5.3

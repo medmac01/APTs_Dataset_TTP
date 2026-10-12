@@ -1,0 +1,20 @@
+apt,attack_group_id,attack_name,first_seen,last_seen,primary_objective,target_sectors,platforms,n_campaigns
+APT28,G0007,APT28,2004,2025,Espionage + Other,Government; Military; Media; Political,Multi-platform,1
+APT29,G0016,APT29,2008,2025,Espionage + Other,Government; Technology; Cloud Infrastructure,Multi-platform,2
+APT3,G0022,APT3,2015,2025,Pure Espionage,Aerospace; Defense; Technology; Telecom,Multi-platform,2
+APT31,G0128,ZIRCONIUM,2017,2025,Espionage + Other,Government; Aerospace; Defense; Technology,Windows,2
+APT37,G0067,APT37,2012,2025,Pure Espionage,Government; Defense; Media; Chemical,Windows,3
+APT38,G0082,APT38,2014,2025,Financial,Finance; Banks,Multi-platform,2
+APT39,G0087,APT39,2014,2025,Pure Espionage,Telecom; Travel; Technology,Windows,2
+APT41,G0096,APT41,2012,2025,Espionage + Other,Technology; Healthcare; Telecom; Manufacturing,Multi-platform,3
+Aquatic Panda,G0143,Aquatic Panda,2020,2025,Espionage + Other,Academic; Government; Technology,Windows,1
+BRONZE BUTLER,G0060,BRONZE BUTLER,2008,2025,Pure Espionage,Government; Critical Infrastructure; Biotech,Windows,2
+Cobalt Group,G0080,Cobalt Group,2016,2025,Financial,Finance; Banks,Windows,1
+Dragonfly,G0035,Dragonfly,2010,2025,ICS/SCADA,Energy; Critical Infrastructure; ICS/SCADA,Windows/ICS,1
+FIN7,G0046,FIN7,2013,2025,Financial,Retail; Hospitality; Finance,Windows,1
+Kimsuky,G0094,Kimsuky,2012,2025,Espionage + Other,Government; Research; Think Tanks,Windows,3
+Lazarus Group,G0032,Lazarus Group,2014,2025,Financial,Finance; Cryptocurrency; Critical Infrastructure,Multi-platform,3
+MuddyWater,G0069,MuddyWater,2017,2025,Espionage + Other,Government; Telecom; Critical Infrastructure,Windows,1
+Sandworm Team,G0034,Sandworm Team,2009,2025,Destructive/Ransomware,Critical Infrastructure; ICS/SCADA,Multi-platform,2
+Turla,G0010,Turla,2004,2025,Pure Espionage,Government; Military; Diplomatic,Windows/Linux,2
+Wizard Spider,G0102,Wizard Spider,2016,2025,Destructive/Ransomware,Enterprise; Healthcare; Government,Windows,1

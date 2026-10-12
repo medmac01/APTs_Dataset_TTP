@@ -1,0 +1,112 @@
+% Construction pipeline of APTs_Dataset_TTP (README version).
+% Build from docs/:  xelatex -output-directory=. src/dataset_pipeline.tex
+%   then:            pdftoppm -r 250 -png -singlefile dataset_pipeline.pdf dataset_pipeline
+% Requires XeLaTeX, Helvetica Neue and Menlo (macOS system fonts) and fontawesome5.
+% Logos (docs/src/logos/) belong to The MITRE Corporation and are used only to identify the data sources.
+\documentclass[tikz,border=6pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Helvetica Neue}
+\setmonofont{Menlo}[Scale=0.88]
+\usepackage{fontawesome5}
+\usepackage{graphicx}
+\usetikzlibrary{calc,arrows.meta,backgrounds,fit,positioning}
+\graphicspath{{src/logos/}{logos/}}
+
+\definecolor{ink}{HTML}{222222}
+\definecolor{mute}{HTML}{6B6B6B}
+\definecolor{rule}{HTML}{B5B5B5}
+\definecolor{group}{HTML}{F5F6F8}
+\definecolor{chipobs}{HTML}{E6E6E6}
+\definecolor{chipgen}{HTML}{CDEBC4}
+\definecolor{chiprej}{HTML}{F3D3CF}
+\definecolor{kbfill}{HTML}{E3ECF6}
+\definecolor{kbline}{HTML}{4A6E96}
+\definecolor{outfill}{HTML}{EAF5E6}
+\definecolor{outline}{HTML}{2F7D32}
+
+\newcommand{\ico}[1]{{\color{kbline}\faIcon{#1}}}
+\newcommand{\chipbox}[2]{{\setlength{\fboxsep}{1.6pt}\colorbox{#1}{\ttfamily\fontsize{6.6}{7.6}\selectfont\strut #2}}}
+\newcommand{\ob}[1]{\chipbox{chipobs}{#1}}
+\newcommand{\gn}[1]{\chipbox{chipgen}{#1}}
+\newcommand{\rj}[1]{\chipbox{chiprej}{#1}}
+\newcommand{\kb}[1]{\chipbox{kbfill}{#1}}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\begin{document}
+\begin{tikzpicture}[
+  font=\fontsize{8.5}{10.2}\selectfont,
+  >={Stealth[length=5pt,width=4.2pt]},
+  stage/.style={draw=ink,line width=0.6pt,fill=white,rounded corners=4pt,align=center,
+    inner sep=4pt,text width=27mm,minimum height=31mm,anchor=center},
+  num/.style={circle,fill=kbline,text=white,font=\bfseries\fontsize{8}{8}\selectfont,
+    inner sep=0pt,minimum size=5mm},
+  flow/.style={->,draw=ink,line width=0.8pt,rounded corners=4pt},
+  phase/.style={font=\bfseries\fontsize{9}{10}\selectfont,text=kbline},
+  panel/.style={draw=kbline,line width=0.8pt,fill=kbfill!45,rounded corners=5pt,inner sep=0pt},
+  logo/.style={draw=rule,line width=0.4pt,fill=white,rounded corners=3pt,
+    minimum width=34mm,minimum height=13.5mm,align=center,inner sep=2pt},
+]
+\newcommand{\stagebox}[6]{% name, x, y, icon, title, body
+  \node[stage] (#1) at (#2,#3) {{\fontsize{15}{15}\selectfont\ico{#4}}\\[3pt]
+    {\fontsize{10}{11.5}\selectfont\textbf{#5}}\\[3pt]{\fontsize{7.6}{9}\selectfont\color{ink!85} #6}};}
+
+% ======================= stages (snake: 1-4 left to right, 5-8 right to left)
+\def\xa{7.2} \def\xb{11.3} \def\xc{15.4} \def\xd{19.5}
+\def\ya{0} \def\yb{-5.1}
+\stagebox{s1}{\xa}{\ya}{database}{Collect\\group data}{ATT\&CK groups, Attack Flow examples, emulation plans}
+\stagebox{s2}{\xb}{\ya}{list-ul}{Enumerate\\reports}{every report cited for each group\\[4pt]\ob{CTI reports}}
+\stagebox{s3}{\xc}{\ya}{filter}{Clean\\reports}{remove unusable sources\\[4pt]\rj{redundant}\,\rj{outdated}\\[2pt]\rj{dead link}}
+\stagebox{s4}{\xd}{\ya}{users}{Select\\groups}{keep well-documented APT groups\\[4pt]\gn{19 APTs}}
+\stagebox{s5}{\xd}{\yb}{crosshairs}{Identify\\campaigns}{delimit each campaign in its reports\\[4pt]\gn{35 campaigns}}
+\stagebox{s6}{\xc}{\yb}{search}{Extract\\behavior}{ordered techniques and tool bindings\\[4pt]\ob{T1566.001}\\[2pt]\ob{tool:S0002}}
+\stagebox{s7}{\xb}{\yb}{sync-alt}{Update\\techniques}{replace revoked IDs with current ones\\[4pt]\rj{T1060}{\color{mute}\,$\rightarrow$\,}\gn{T1547.001}}
+\stagebox{s8}{\xa}{\yb}{clipboard-check}{Verify\\sequences}{check every ID and binding against the knowledge base\\[4pt]\kb{ATT\&CK v17.1}}
+
+\foreach \s/\n in {s1/1,s2/2,s3/3,s4/4,s5/5,s6/6,s7/7,s8/8}
+  \node[num] at ($(\s.north west)+(0.12,-0.12)$) {\n};
+
+\draw[flow] (s1) -- (s2);
+\draw[flow] (s2) -- (s3);
+\draw[flow] (s3) -- (s4);
+\draw[flow] (s4.south) -- (s5.north);
+\draw[flow] (s5) -- (s6);
+\draw[flow] (s6) -- (s7);
+\draw[flow] (s7) -- (s8);
+
+\begin{scope}[on background layer]
+  \foreach \a/\b in {s1/s2, s3/s4, s6/s5, s8/s7}
+    \node[fit=(\a)(\b),inner xsep=4mm,inner ysep=4mm,fill=group,draw=rule,line width=0.5pt,
+      rounded corners=5pt,dashed] {};
+\end{scope}
+\node[phase,anchor=south] at ($(s1.north)!0.5!(s2.north)+(0,0.5)$) {\faIcon{download}\,\,Collect};
+\node[phase,anchor=south] at ($(s3.north)!0.5!(s4.north)+(0,0.5)$) {\faIcon{broom}\,\,Curate};
+\node[phase,anchor=north] at ($(s5.south)!0.5!(s6.south)+(0,-0.5)$) {\faIcon{microscope}\,\,Extract};
+\node[phase,anchor=north] at ($(s7.south)!0.5!(s8.south)+(0,-0.5)$) {\faIcon{check-double}\,\,Normalize \& verify};
+
+% ======================= input: public sources
+\node[logo] (in1) at (1.9,1.05) {\includegraphics[height=4.2mm]{attack.png}\\[2pt]{\fontsize{7.4}{8.5}\selectfont Enterprise knowledge base}};
+\node[logo,below=2.5mm of in1] (in2) {\includegraphics[height=4.6mm]{ctid.png}\\[2pt]{\fontsize{7.4}{8.5}\selectfont Attack Flow examples}};
+\node[logo,below=2.5mm of in2] (in3) {\raisebox{-0.42\height}{\includegraphics[height=9mm]{attack_evals.png}}\hspace{4pt}%
+  \parbox{17mm}{\raggedright\fontsize{7.4}{8.5}\selectfont Adversary emulation plans}};
+\begin{scope}[on background layer]
+  \node[panel,fit=(in1)(in3),inner xsep=3mm,inner ysep=3mm] (inpanel) {};
+\end{scope}
+\node[phase,anchor=south] at ($(inpanel.north)+(0,0.12)$) {\faIcon{globe}\,\,Input: public CTI};
+\draw[flow] (inpanel.east |- s1) -- (s1.west);
+
+% ======================= output: the released dataset
+\node[draw=outline,line width=0.8pt,fill=outfill,rounded corners=5pt,text width=34mm,align=left,inner sep=3.2mm]
+  (out) at (1.9,\yb) {%
+  {\centering{\fontsize{17}{17}\selectfont\color{outline}\faIcon{box-open}}\\[3pt]
+   {\fontsize{9.5}{11}\selectfont\textbf{APTs\_Dataset\_TTP}}\par}\vspace{5pt}
+  {\fontsize{7.6}{10.6}\selectfont
+   \faIcon[regular]{file-code}\,\, 35 campaign sequences\\
+   \faIcon{stream}\,\, 19 per-group chains\\
+   \faIcon{users}\,\, 19 group profiles\\
+   \faIcon[regular]{file-pdf}\,\, 58 source reports\\
+   \faIcon{chart-bar}\,\, statistics \& figures}};
+\node[phase,anchor=north,text=outline] at ($(out.south)+(0,-0.12)$) {\faIcon{flag-checkered}\,\,Output: released dataset};
+\draw[flow] (s8.west) -- (out.east |- s8);
+\end{tikzpicture}
+\end{document}
